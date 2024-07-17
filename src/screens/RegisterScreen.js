@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { iP } from './ip';
 const RegisterScreen = ({ navigation }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -28,7 +28,7 @@ const RegisterScreen = ({ navigation }) => {
     };
 
     try {
-      const response = await fetch('http://192.168.43.8:4200/users', {
+      const response = await fetch(`http://${iP}:4200/users`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const RegisterScreen = ({ navigation }) => {
       setMobile('');
       setError(null);
       // Navigate to GetUserScreen after successful registration
-      navigation.navigate('GetUser');
+      navigation.navigate('Login');
     } catch (error) {
       setError(error.message);
       console.error('Error:', error);
@@ -107,6 +107,9 @@ const RegisterScreen = ({ navigation }) => {
       />
       {error && <Text style={styles.errorText}>Error: {error}</Text>}
       <Button title="Register" onPress={handleRegister} />
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.loginText}>Already have an account? Log in</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -129,6 +132,11 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginBottom: 12,
+  },
+  loginText: {
+    marginTop: 20,
+    color: 'blue',
+    textAlign: 'center',
   },
 });
 

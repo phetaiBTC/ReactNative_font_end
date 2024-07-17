@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
-
+import { iP } from './ip';
 const GetUserScreen = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +9,7 @@ const GetUserScreen = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://192.168.43.8:4200/users', { method: 'GET' });
+        const response = await fetch(`http://${iP}:4200/users`, { method: 'GET' });
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
